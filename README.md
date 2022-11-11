@@ -1,2 +1,3 @@
 # FOG-snapins
-Snapins for the FOG Project.
+Some snapins for the FOG Project.
+https://fogproject.org/ 
