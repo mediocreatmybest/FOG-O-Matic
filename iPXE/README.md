@@ -18,3 +18,10 @@ Scripts from the FOG Project/Installer
 
 ##iPXE-Scripts
 Misc. iPXE Scripts 
+
+##Useful Links for iPXE and FOG
+
+https://docs.fogproject.org/en/latest/reference/compile_ipxe_binaries.html
+
+https://forums.fogproject.org/topic/15826/updating-compiling-the-latest-version-of-ipxe
+
