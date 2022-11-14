@@ -1,0 +1,127 @@
+:start
+
+###################### Advanced FOG Main Menu ######################
+
+menu iPXE Advanced boot Menu for FOG
+item --gap --					=================  Live Operating Systems  =================
+item
+item --key f fedora22 			Boot Live Fedora 22 (F)
+item --key s sysrescue			Boot SysRescue CD (S)
+item --key i sysrescue-intel		Boot SysRescue Cd Intel (I)
+item
+item --gap --					====================  Tools & Utilities  ===================
+item
+item --key t menu-tools			Boot Live Recovery & Testing Tools (T)
+item --key d menu-diag			Diagnostics Menu (D)
+item
+item --gap --             		====================  Advanced Options  ====================
+item
+item --key c config       		Configure settings
+item shell               		Drop to iPXE shell
+item reboot               		Reboot computer
+item --key x exit         		Exit iPXE and continue BIOS boot
+item return						Return to Main FOG Menu
+choose --timeout ${menu-timeout} --default ${menu-default} selected
+set menu-timeout 0
+set submenu-timeout 0
+set menu-default return
+goto ${selected}
+
+
+:fedora22
+initrd http://${fog-ip}/${fog-webroot}/boot/fedora22/initrd0.img
+chain http://${fog-ip}/${fog-webroot}/boot/fedora22/vmlinuz0 initrd=initrd0.img root=live:http://${fog-ip}/${fog-webroot}/boot/fedora22/squashfs.img rootflags="loop" rootfstype=auto ro rd.live.image quiet rhgb rd.luks=0 rd.md=0 rd.dm=0
+goto start
+
+:sysrescue
+echo Starting Sys RescueCD (32bit) with default options
+initrd http://${fog-ip}/${fog-webroot}/boot/sysrescue/initram.igz
+chain http://${fog-ip}/${fog-webroot}/boot/sysrescue/rescue.32 cdroot docache dodhcp setkmap=us netboot=http://${fog-ip}/${fog-webroot}/boot/sysrescue/sysrcd.dat
+prompt
+goto start
+
+:sysrescue-intel
+echo Starting Sys RescueCD (32bit) with default options
+initrd http://${fog-ip}/${fog-webroot}/boot/sysrescue/initram.igz
+chain http://${fog-ip}/${fog-webroot}/boot/sysrescue/rescue-intel.32 cdroot docache dodhcp setkmap=us netboot=http://${fog-ip}/${fog-webroot}/boot/sysrescue/sysrcd.dat
+prompt
+goto start
+
+:reboot
+reboot
+
+:shell
+echo Type 'exit' to get the back to the menu
+shell
+set menu-timeout 0
+goto start
+
+:exit
+exit
+
+:config
+config
+goto start
+
+:return
+chain http://${fog-ip}/${fog-webroot}/service/ipxe/boot.php?mac=${net0/mac}&arch=${arch} ||
+prompt
+goto start
+
+###################### Tools & Utilities Menu ######################
+
+:menu-tools
+menu Tools & Utilities
+item --gap --				========================  Utilities  =======================
+item
+item --key g gparted		Gparted Live
+item --key d dban	  	Darik's Boot and Nuke
+item
+item --key 0x08 back Back to top menu...
+iseq ${menu-default} menu-tools && goto menu-diag-timed ||
+choose selected && goto ${selected} || goto start
+:menu-diag-timed
+choose --timeout ${submenu-timeout} --default gparted selected && goto ${selected} || goto start
+
+:gparted
+kernel http://${fog-ip}/${fog-webroot}/boot/gparted/vmlinuz
+initrd http://${fog-ip}/${fog-webroot}/boot/gparted/initrd.img
+imgargs vmlinuz boot=live config components union=overlay username=user noswap noeject ip= vga=788 fetch=http://${fog-ip}/${fog-webroot}/boot/gparted/filesystem.squashfs
+boot || goto start
+
+:dban
+initrd http://${fog-ip}/${fog-webroot}/boot/dban-2.3.0_i586.iso
+chain memdisk iso raw ||
+goto start
+
+
+
+###################### DIAGNOSTICS MENU #############################
+
+:menu-diag
+menu Diagnostic tools
+item --gap --				===============  Diagnostics  =============
+item
+item hdt           			Hardware Detection Tool
+item breakin      			Breakin 3.71
+item seatools				Seagate Tools
+item
+item --key 0x08 back Back to top menu...
+iseq ${menu-default} menu-diag && goto menu-diag-timed ||
+choose selected && goto ${selected} || goto start
+:menu-diag-timed
+choose --timeout ${submenu-timeout} --default hdt selected && goto ${selected} || goto start
+
+:hdt
+initrd http://${fog-ip}/${fog-webroot}/boot/hdt-0.5.2.img
+chain memdisk
+goto start
+
+:breakin
+initrd http://${fog-ip}/${fog-webroot}/boot/breakin-4.26.iso
+chain memdisk iso raw ||
+goto start
+
+:seatools
+sanboot http://${fog-ip}/${fog-webroot}/boot/seatools.iso
+goto start

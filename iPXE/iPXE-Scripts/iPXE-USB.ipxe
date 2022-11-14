@@ -1,0 +1,8 @@
+#!ipxe
+prompt --key 0x02 --timeout 1000 Press Ctrl-B for the iPXE command line... && shell ||
+dhcp
+cpuid --ext 29 && set arch x86_64 || set arch i386
+params
+param mac ${net0/mac}
+param arch ${arch}
+chain http://x.x.x.x/fog/service/ipxe/boot.php##params
