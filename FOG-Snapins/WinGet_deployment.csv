@@ -1,0 +1,5 @@
+﻿Package Name,Package ID,Tested Version,Source,Deploys,Notes
+Blender,BlenderFoundation.Blender,3.3.1,WinGet,Yes,Desktop Icons and shortcuts don't get installed for all users. Post Script would need to create these.
+K-Lite Codec Pack Full,CodecGuide.K-LiteCodecPack.Full,17.3.0,WinGet,Yes, 
+Python 3.9,Python.Python.3.9,3.9.13,WinGet,Yes, 
+PyCharm Community Edition,JetBrains.PyCharm.Community,22.2.1,WinGet,Yes, 
