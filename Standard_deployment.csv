@@ -1,5 +1,0 @@
-﻿Program,Description,FOG Snapin Type,FOG Template,Program File Name,Arguments,Reboot required,FOG Snapin Command read-only,Notes
-Brackets,Brackets IDE,Normal Snapin,MSI,Brackets.x.x.msi,/quiet,No,msiexec.exe /i Brackets.x.x.msi /quiet,
-CodeMeterRuntime,"Program for WIBU protected programs, *sigh* https://www.wibu.com/",Normal Snapin,<blank>,CodeMeterRuntime.exe,/i /quiet,Yes,CodeMeterRuntime.exe /i /quiet,"MSI wraped in an exe, WIBU protected programs with physcial security dongles *Please stop this!*"
-DelProf2,From: https://helgeklein.com/free-tools/delprof2-user-profile-deletion-tool/,Normal Snapin,<Blank>,DelProf2.exe,/u /d:21,No,DelProf2.exe /u /d:21,Removes old profiles not used for 21 days
-FX Tools,Efofex Science & Maths Tools,Normal Snapin,<Blank>,FXDrawTools.exe,"/verysilent /noreboot /Name=""<LicenseName>"" /Passcode=""XYZ"" /NoConnect /Limit /Manual=""<Hash>""",No,"FXDrawTools.exe /verysilent /noreboot /Name=""<LicenseName>"" /Passcode=""XYZ"" /NoConnect /Limit /Manual=""<Hash>""",The same method is used for other FX Packages
