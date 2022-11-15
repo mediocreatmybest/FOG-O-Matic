@@ -1,4 +1,14 @@
-#Clears and Imports up to date rooms from ADGroup
+#Check if ActiveDirectory module is installed.
+if (Get-Module -ListAvailable -Name ActiveDirectory) {
+} 
+else {
+    echo "----" |Out-File -Append c:\fog.log
+    echo "Module ActiveDirectory not installed, please install"|Out-File -Append c:\fog.log
+    echo "----" |Out-File -Append c:\fog.log
+    Exit
+}
+
+#Clears room and then imports current rooms from ActiveDirectory Group
 $groups = Get-ADGroup -SearchBase "OU=Groups,OU=xyz,OU=xyz,DC=xyzplace,DC=net" -Filter {Name -like "ComputerGroup*"}
 $groupfull = @()
 
