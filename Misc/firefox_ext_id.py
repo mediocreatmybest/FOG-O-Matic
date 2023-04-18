@@ -14,7 +14,7 @@ def manifest_key(d, key):
 # Create parser
 parser = argparse.ArgumentParser(description='Extract ID value from a JSON file within a compressed file')
 # Add path to the compressed file
-parser.add_argument('--path', help='Path to compressed file')
+parser.add_argument('--path', help='Path to compressed file', required=True)
 #Set args
 args = parser.parse_args()
 
