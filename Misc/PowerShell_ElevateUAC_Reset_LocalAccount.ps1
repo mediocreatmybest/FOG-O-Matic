@@ -1,0 +1,1 @@
+Start-Process powershell -Verb runas -ArgumentList "-NoExit -c & $PWD\Reset_LocalAccount_wPrompts.ps1"
