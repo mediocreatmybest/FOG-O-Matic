@@ -6,7 +6,7 @@ Some items I've found useful with FOG from the FOG Project as well as scripts to
 
 ## Fog-Snapins
 
-[Fog-Snains](https://github.com/mediocreatmybest/FOG-O-Matic/tree/main/FOG-Snapins)
+[Fog-Snapins](https://github.com/mediocreatmybest/FOG-O-Matic/tree/main/FOG-Snapins)
 
 Deployment scripts with FOG, mostly written in PowerShell, feel free to do any pull requests to fix or add items.
 

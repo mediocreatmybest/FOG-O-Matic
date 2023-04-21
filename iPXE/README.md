@@ -7,13 +7,13 @@ Some items I've found useful with FOG from the FOG Project.
 
 FOG Advanced Menu based on examples from [robinsmidsrod gist](https://gist.github.com/robinsmidsrod/2234639)
 
-Additional information DHCP Options:
-[gist link for https://gist.github.com/robinsmidsrod/4008017](https://gist.github.com/robinsmidsrod/4008017)
+Additional information DHCP Options:  
+[https://gist.github.com/robinsmidsrod/4008017](https://gist.github.com/robinsmidsrod/4008017)
 
-Example for Sysrescue:
-[Example for https://gist.github.com/robinsmidsrod/1c7bbd4a058f0e6892df](https://gist.github.com/robinsmidsrod/1c7bbd4a058f0e6892df)
+Example for Sysrescue:  
+[https://gist.github.com/robinsmidsrod/1c7bbd4a058f0e6892df](https://gist.github.com/robinsmidsrod/1c7bbd4a058f0e6892df)
 
-Results may vary. ¯\\_(ツ)_/¯
+Results may vary. ¯\\\_(ツ)\_/¯
 
 ## Fog-Scripts
 
