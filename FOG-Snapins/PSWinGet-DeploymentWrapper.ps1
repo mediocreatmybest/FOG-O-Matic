@@ -121,10 +121,10 @@ $PadLogEnd | Out-File -FilePath $LogFile -Append -Encoding utf8
         Write-Verbose "Upgrading $Package using Winget from $wingetPath..."
         if ($LogFile) {
 $PadLogStart | Out-File -FilePath $LogFile -Append -Encoding utf8
-& $wingetPath $WingetSource upgrade $Package $Silent $DisableInteractivity --source $WingetSource 2>&1 | Out-File -FilePath $LogFile -Append -Encoding utf8
+& $wingetPath upgrade $Package $Silent $DisableInteractivity --source $WingetSource 2>&1 | Out-File -FilePath $LogFile -Append -Encoding utf8
 $PadLogEnd | Out-File -FilePath $LogFile -Append -Encoding utf8
         } else {
-& $wingetPath $WingetSource upgrade $Package $Silent $DisableInteractivity --source $WingetSource
+& $wingetPath upgrade $Package $Silent $DisableInteractivity --source $WingetSource
         }
     }
 }
