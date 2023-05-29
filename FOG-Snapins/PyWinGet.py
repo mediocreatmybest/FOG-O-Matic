@@ -45,7 +45,8 @@ def run_command_with_args(command_args, log_file=None):
                 f.write(f"\n\n")
     else:
         try:
-            subprocess.run(command_args, check=True)
+            result = subprocess.run(command_args, check=True)
+            print(f"Command was successful with return code: {result.returncode}\n")
         except subprocess.CalledProcessError as e:
             print(f"Command failed with return code: {e.returncode}")
             sys.exit(e.returncode)
