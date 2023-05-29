@@ -1,17 +1,52 @@
 import glob
 import subprocess
 import sys
+import argparse
+import datetime
 
-# Should allow winget commands to be passed directly to winget with an output.
-# Can be converted into an exe with Auto Py to Exe to allow FOG to run WinGet commands
-
-def run_command_with_args(command_args):
-    try:
-        result = subprocess.run(command_args, check=True)
-        print(f"Command was successful with return code: {result.returncode} \n")
-    except subprocess.CalledProcessError as e:
-        print(f"Command failed with return code: {e.returncode}")
-        sys.exit(e.returncode)
+def run_command_with_args(command_args, log_file=None):
+    if log_file:
+         try:
+            result = subprocess.run(command_args, check=True, capture_output=True, text=True)
+            log_return = f"Command was successful with return code: {result.returncode}\n"
+            print(log_return)
+         except subprocess.CalledProcessError as e:
+            e_log_return = f"Command failed with return code: {e.returncode}"
+            print(e_log_return)
+            with open(log_file, 'a') as f:
+                f.write(f"\n\n")
+                f.write(f"------------------------------------------------------------------------------\n")
+                f.write(f"-------------------------------------WinGet-----------------------------------\n")
+                f.write(f"---------------------------------Snap-in failed-------------------------------\n")
+                f.write("\n")
+                f.write(f"Date: {datetime.datetime.now()}\n")
+                f.write("\n")
+                f.write(f"{e.output}")
+                f.write("\n")
+                f.write(f"{e_log_return}\n")
+                f.write(f"------------------------------------------------------------------------------\n")
+                f.write(f"\n\n")
+            sys.exit(e.returncode)
+         else:
+            with open(log_file, 'a') as f:
+                f.write(f"\n\n")
+                f.write(f"------------------------------------------------------------------------------\n")
+                f.write(f"-------------------------------------WinGet-----------------------------------\n")
+                f.write(f"-------------------------------Snap-in successful-----------------------------\n")
+                f.write("\n")
+                f.write(f"Date: {datetime.datetime.now()}\n")
+                f.write("\n")
+                f.write(f"{result.stdout}")
+                f.write("\n")
+                f.write(f"{log_return}\n")
+                f.write(f"------------------------------------------------------------------------------\n")
+                f.write(f"\n\n")
+    else:
+        try:
+            subprocess.run(command_args, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Command failed with return code: {e.returncode}")
+            sys.exit(e.returncode)
 
 def find_binary(binary_pattern):
     binary_path = next(glob.iglob(binary_pattern, recursive=True), None)
@@ -27,8 +62,15 @@ binary_pattern = r'C:\Program Files\WindowsApps\Microsoft.DesktopAppInstaller*\*
 # Find winget
 binary_path = find_binary(binary_pattern)
 
+# Set argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('-l', '--log', help='Log file for output')
+parser.add_argument('command', nargs=argparse.REMAINDER, help='Commands for WinGet')
+
+args = parser.parse_args()
+
 # Pass all arguments to the subprocess of winget
-input_args = sys.argv[1:]
+input_args = args.command
 
 # Additional forced arguments
 forced_args = ['--accept-source-agreements', '--accept-package-agreements', '--silent', '--disable-interactivity']
@@ -42,4 +84,4 @@ else:
     command_args = [binary_path] + input_args
 
 # run winget command with args
-run_command_with_args(command_args)
+run_command_with_args(command_args, log_file=args.log)
