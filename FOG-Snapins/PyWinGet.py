@@ -1,8 +1,10 @@
-import glob
-import subprocess
-import sys
 import argparse
 import datetime
+import glob
+import re
+import subprocess
+import sys
+
 
 def run_command_with_args(command_args, log_file=None):
     if log_file:
@@ -76,7 +78,7 @@ input_args = args.command
 forced_args = ['--accept-source-agreements', '--accept-package-agreements', '--silent', '--disable-interactivity']
 
 # Check if any of the inputted arguments contain "install"
-if any('install' in arg.lower() for arg in input_args):
+if any(re.fullmatch(r'.*\binstall\b.*', arg.lower()) for arg in input_args):
     # Add the forced arguments if "install" is found
     command_args = [binary_path] + input_args + forced_args
 else:
